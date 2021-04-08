@@ -1,47 +1,61 @@
 // Write your tests here!
 const expect = require("chai").expect;
-const polybiusModule = require("../src/polybius");
+const {polybius} = require("../src/polybius");
 
-describe("Polybiu, encode/decode", () => {
+describe("Polybius, encode/decode", () => {
 
     it("encode output should be string type", () => {
       const expected = "string";
-      const actual = typeof polybiusModule("thinkful");
+      const actual = typeof polybius("thinkful");
       expect(actual).to.equal(expected);
     });
 
     it("decode output should be string type", () => {
       const expected = "string";
-      const actual = typeof polybiusModule("4432423352125413",false);
+      const actual = typeof polybius("4432423352125413",false);
       expect(actual).to.equal(expected);
     });
 
 
     it("message includes combined letters", () => {
-        const expected = "th(i/j)nkful";
-        const actual = polybiusModule("4432423352125413",false);
-        expect(actual).to.equal(expected);
+        const message = "jiggle";
+      const actual = polybius(message);
+      const expected = "424222221351";
+
+      expect(actual).to.equal(expected);
     });
+
+    it("should translate 42 to both 'i' and 'j'", () => {
+        const message = "424222221351";
+        const actual = polybius(message, false);
+  
+        expect(actual).to.include("i");
+        expect(actual).to.include("j");
+      });
 
     
 
     it("string with space and capital letters", () => {
+      const message = "Hello World";
+      const actual = polybius(message);
       const expected = "3251131343 2543241341";
-      const actual = polybiusModule("Hello World");
       expect(actual).to.equal(expected);
     });
 
     it("message includes space", () => {
-        const expected = "hello world";
-        const actual = polybiusModule("3251131343 2543241341",false);
-        expect(actual).to.equal(expected);
+        const message = "2345 23513434112251";
+      const actual = polybius(message, false);
+      const expected = "my message";
+
+      expect(actual).to.equal(expected);
     });
 
     
 
     it("lower case string", () => {
-      const expected = "4432423352125413";
-      const actual = polybiusModule("thinkful");
+      const message = "My message";
+      const actual = polybius(message);
+      const expected = "2345 23513434112251";
       expect(actual).to.equal(expected);
     });
 
